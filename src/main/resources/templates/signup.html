@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}
+	">
+<head>
+<meta charset="UTF-8" />
+<title>This is home page</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+
+					<div class="my-card mt-2">
+
+						<div th:if="${session.message}"
+							th:classappend="${session.message.type}" class="alert "
+							role="alert">
+							<p class="text-center" th:text="${session.message.content}">
+							</p>
+
+							<th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+
+
+							<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block>  
+ -->
+						</div>
+
+						<div class="container text-center">
+							<img class="" style="width: 80px;" src=""
+								th:src="@{/image/login.png}" alt="" />
+
+						</div>
+
+						<h1 class="text-center">Register here !!</h1>
+
+
+                 <!--   if you want to remove client side validation then add "novalidation" in form attribute like <form novalidate action="" ..... -->
+						<form  action="" th:action="@{do_register}"
+							method="post" th:object="${user}">
+
+							<!-- name field -->
+							<div class="form-group">
+								<label for="name_field">Your Name</label> <input type="text"
+									name="name" class="form-control " id="name_field"
+									th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+									aria-describedby="emailHelp" placeholder="Enter here" required
+									th:value="${user.name}" />
+
+								<div class="invalid-feedback"
+									th:each="e: ${#fields.errors('name')}" th:text="${e}"></div>
+
+							</div>
+
+
+							<!-- email field -->
+							<div class="form-group">
+								<label for="email_field">Your Email</label> <input type="email"
+									name="email" class="form-control"
+									th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ' '}"
+									id="email_field" aria-describedby="emailHelp"
+									placeholder="Enter here" required th:value="${user.email}" />
+
+								<div th:each="e :${#fields.errors('email')}" th:text="${e}"
+									class="invalid-feedback"></div>
+
+							</div>
+
+							<!-- password field -->
+							<div class="form-group">
+								<label for="password_field">Your Password</label> <input
+									name="password" type="password" class="form-control"
+									th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ' '}"
+									id="password_field" aria-describedby="emailHelp"
+									placeholder="Enter here" required />
+									
+									<div th:each="e :${#fields.errors('password')}" th:text="${e}"
+									class="invalid-feedback"></div>
+									
+
+							</div>
+
+							<!-- user about field -->
+
+							<div class="form-group">
+								<textarea name="about" th:value="${user.about}"
+									placeholder="Enter something about yourself"
+									class="form-control" rows="10"
+									th:text="${user.about}"
+									></textarea>
+							</div>
+
+							<!-- 	terms and condition agreement -->
+							<div class="form-group form-check text-center">
+
+								<input type="checkbox" name="agreement" class="form-check-input"
+									id="agreement" /> <label for="agreement"> Accept term
+									and condition</label>
+
+							</div>
+
+
+							<div class="container text-center">
+
+								<button type="submit" class="btn bg-primary text-white ">submit</button>
+								<button type="reset" class="btn btn-warning text-white ">Reset</button>
+
+
+							</div>
+
+
+						</form>
+
+
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>
